@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ subject }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .email-container {
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .header {
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .content {
+            margin-top: 20px;
+        }
+        .content p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .task-details {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .task-details th, .task-details td {
+            padding: 8px;
+            text-align: left;
+        }
+        .task-details th {
+            background-color: #f8f8f8;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>{{ subject }}</h1>
+        </div>
+        <div class="content">
+            <p>Dear {{ assigned_to_name }},</p>
+            <p>{{ task_message }}</p> <!-- This will be dynamically filled based on condition -->
+            <table class="task-details" border="1">
+                <tr>
+                    <th>Task Title</th>
+                    <td>{{ title }}</td>
+                </tr>
+                <tr>
+                    <th>Created By</th>
+                    <td>{{ created_by_name }}</td>
+                </tr>
+                <tr>
+                    <th>Assigned To</th>
+                    <td>{{ assigned_to_name }}</td>
+                </tr>
+                <tr>
+                    <th>Created Date</th>
+                    <td>{{ created_at }}</td>
+                </tr>
+                <tr>
+                    <th>Due Date</th>
+                    <td>{{ due_date }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ description }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <p>Best Regards, <br> Your Task Management System</p>
+        </div>
+    </div>
+</body>
+</html>

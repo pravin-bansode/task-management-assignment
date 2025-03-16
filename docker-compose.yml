@@ -1,0 +1,62 @@
+services:
+
+  db:
+    container_name: db
+    image: postgres:13-alpine  # Using the Alpine version for PostgreSQL
+    environment:
+      POSTGRES_DB: taskmanagementdb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - task_management_network
+
+
+
+  # Django web application
+  web:
+    build: .
+    container_name: django_app
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=taskManagement.settings
+      - CELERY_BROKER_URL=redis://redis:6379/3
+      - CELERY_RESULT_BACKEND=redis://redis:6379/3
+
+    ports:
+      - "8000:8000"  # Django HTTP server
+      - "8001:8001"  # Uvicorn WebSocket server (ASGI)
+    depends_on:
+      - redis
+      - db
+    command: >
+      sh -c "
+              python manage.py runserver 0.0.0.0:8000 & 
+             uvicorn taskManagement.asgi:application --host 0.0.0.0 --port 8001 --reload & 
+             celery -A taskManagement worker --loglevel=info & 
+             celery -A taskManagement beat --loglevel=info"
+    
+    networks:
+      - task_management_network
+
+  # Redis for caching and Channels
+  redis:
+    image: redis:alpine  # Use a lighter Redis image
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - task_management_network
+
+networks:
+  task_management_network:
+    driver: bridge
+
+volumes:
+  postgres_data:

@@ -1,0 +1,12 @@
+.env*
+
+# Ignore Python bytecode files
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+
+/venv/
+db.sqlite3
+
+debug.log
+celerybeat-schedule
