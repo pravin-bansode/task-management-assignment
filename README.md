@@ -152,6 +152,10 @@ To get started with the **Task Management System**, follow the steps below to se
 
    ```bash
    docker-compose exec web bash
+   ```
+   OR
+   ```bash
+   docker-compose exec web sh
 
 5. **Apply Database Migrations**:
    
@@ -205,6 +209,7 @@ The **Task Management System** exposes a set of RESTful APIs for managing tasks,
       }
 
 ```
+
 #### 2. **POST** `http://localhost:8000/api/token/`  
   Login user. 
   **Request Body**:
@@ -222,6 +227,36 @@ The **Task Management System** exposes a set of RESTful APIs for managing tasks,
             "access": "access token",
             }  
   ```
+
+
+#### 1. **GET & PUT & PATCH & DELETE ** `http://localhost:8000/api/users/{id}`  
+  update specific user. 
+  **Request Body**:
+```json
+  {
+    "username": "user123",
+    "email": "user123@example.com",
+    "password": "password123",
+    "first_name": "user1",
+    "last_name": "last_name"
+  }
+
+
+```
+**Response**:
+  ```json
+      {
+        "id":1,
+        "username": "user123",
+        "email": "user123@example.com",
+        "first_name": "user1",
+        "last_name": "last_name"
+       
+      }
+
+```
+
+
 ### Task Mangement
 #### 1. **POST** `http://localhost:8000/api/task/`  
   Add a new task. 
